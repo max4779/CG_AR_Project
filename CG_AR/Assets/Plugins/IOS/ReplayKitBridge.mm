@@ -1,64 +1,80 @@
-#import <UIKit/UIKit.h>
 #import <ReplayKit/ReplayKit.h>
+#import <UIKit/UIKit.h>
 
-UIView *recIndicator;
+static BOOL isRecording = NO;
 
 extern "C" {
 
-    void ShowRECIndicator() {
-        dispatch_async(dispatch_get_main_queue(), ^{
+void StartRecording() {
+    if (@available(iOS 11.0, *)) {
 
-            if (recIndicator != nil) return;
+        if (isRecording) return;
+
+        RPScreenRecorder *recorder = [RPScreenRecorder sharedRecorder];
+        recorder.microphoneEnabled = YES;
+
+        [recorder startRecordingWithHandler:^(NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"[ReplayKit] StartRecording ERROR: %@", error.localizedDescription);
+            } else {
+                NSLog(@"[ReplayKit] Recording Started");
+                isRecording = YES;
+            }
+        }];
+    }
+}
+
+void StopRecording() {
+    if (@available(iOS 11.0, *)) {
+
+        if (!isRecording) return;
+
+        RPScreenRecorder *recorder = [RPScreenRecorder sharedRecorder];
+
+        [recorder stopRecordingWithHandler:^(RPPreviewViewController * _Nullable previewViewController, NSError * _Nullable error) {
+
+            if (error) {
+                NSLog(@"[ReplayKit] StopRecording ERROR: %@", error.localizedDescription);
+                isRecording = NO;
+                return;
+            }
+
+            NSLog(@"[ReplayKit] Recording Stopped");
+
+            // 자동으로 팝업을 띄우지 않기 위해 previewViewController를 무시함
+            // 또는 필요하다면 팝업을 띄우도록 아래 코드 사용 가능:
+            /*
+            UIViewController *root = UIApplication.sharedApplication.keyWindow.rootViewController;
+            [root presentViewController:previewViewController animated:YES completion:nil];
+             */
+
+            isRecording = NO;
+        }];
+    }
+}
+
+void ShowRECIndicator() {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (@available(iOS 13.0, *)) {
+
+            // 빨간 점 UI 표시
+            UIView *indicator = [[UIView alloc] initWithFrame:CGRectMake(20, 40, 18, 18)];
+            indicator.backgroundColor = [UIColor redColor];
+            indicator.layer.cornerRadius = 9;
+            indicator.tag = 987654;
 
             UIWindow *window = UIApplication.sharedApplication.keyWindow;
-            CGFloat size = 50;
-
-            recIndicator = [[UIView alloc] initWithFrame:CGRectMake(
-                window.bounds.size.width - size - 20,
-                40,
-                size,
-                size
-            )];
-
-            recIndicator.backgroundColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:0.9];
-            recIndicator.layer.cornerRadius = size / 2;
-
-            UILabel *label = [[UILabel alloc] initWithFrame:recIndicator.bounds];
-            label.text = @"REC";
-            label.textAlignment = NSTextAlignmentCenter;
-            label.textColor = [UIColor whiteColor];
-            label.font = [UIFont boldSystemFontOfSize(16)];
-            [recIndicator addSubview:label];
-
-            [window addSubview:recIndicator];
-        });
-    }
-
-    void HideRECIndicator() {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [recIndicator removeFromSuperview];
-            recIndicator = nil;
-        });
-    }
-
-    void StartRecording() {
-        if (@available(iOS 11.0, *)) {
-            RPScreenRecorder *recorder = [RPScreenRecorder sharedRecorder];
-            recorder.microphoneEnabled = false;
-
-            [recorder startRecordingWithHandler:^(NSError * _Nullable error) {}];
+            [window addSubview:indicator];
         }
-    }
+    });
+}
 
-    void StopRecording() {
-        if (@available(iOS 11.0, *)) {
-            RPScreenRecorder *recorder = [RPScreenRecorder sharedRecorder];
+void HideRECIndicator() {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIWindow *window = UIApplication.sharedApplication.keyWindow;
+        UIView *indicator = [window viewWithTag:987654];
+        if (indicator) [indicator removeFromSuperview];
+    });
+}
 
-            [recorder stopRecordingWithHandler:^(RPPreviewViewController *preview, NSError * _Nullable error) {
-
-                UIViewController *rootVC = UIApplication.sharedApplication.keyWindow.rootViewController;
-                [rootVC presentViewController:preview animated:YES completion:nil];
-            }];
-        }
-    }
 }

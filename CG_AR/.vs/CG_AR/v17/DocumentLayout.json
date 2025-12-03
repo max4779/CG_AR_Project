@@ -1,10 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\max47\\Desktop\\Coding\\CG_AR_Project\\CG_AR\\",
+  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\coding\\CG_AR_Project\\CG_AR\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BAF52E42-66FF-B4CE-9445-C773B26EB993}|Assembly-CSharp.csproj|c:\\users\\max47\\desktop\\coding\\cg_ar_project\\cg_ar\\assets\\ui\\arrecordingmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BAF52E42-66FF-B4CE-9445-C773B26EB993}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\arrecordingmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BAF52E42-66FF-B4CE-9445-C773B26EB993}|Assembly-CSharp.csproj|c:\\users\\user\\desktop\\coding\\cg_ar_project\\cg_ar\\assets\\ui\\arscreenrecorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BAF52E42-66FF-B4CE-9445-C773B26EB993}|Assembly-CSharp.csproj|solutionrelative:assets\\ui\\arscreenrecorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\max47\\Desktop\\Coding\\CG_AR_Project\\CG_AR\\Assets\\UI\\ARRecordingManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +22,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ARScreenRecorder.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\coding\\CG_AR_Project\\CG_AR\\Assets\\UI\\ARScreenRecorder.cs",
+              "RelativeDocumentMoniker": "Assets\\UI\\ARScreenRecorder.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\coding\\CG_AR_Project\\CG_AR\\Assets\\UI\\ARScreenRecorder.cs",
+              "RelativeToolTip": "Assets\\UI\\ARScreenRecorder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-03T09:13:34.565Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ARRecordingManager.cs",
               "DocumentMoniker": "C:\\Users\\max47\\Desktop\\Coding\\CG_AR_Project\\CG_AR\\Assets\\UI\\ARRecordingManager.cs",
-              "RelativeDocumentMoniker": "Assets\\UI\\ARRecordingManager.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\max47\\Desktop\\Coding\\CG_AR_Project\\CG_AR\\Assets\\UI\\ARRecordingManager.cs",
               "ToolTip": "C:\\Users\\max47\\Desktop\\Coding\\CG_AR_Project\\CG_AR\\Assets\\UI\\ARRecordingManager.cs",
-              "RelativeToolTip": "Assets\\UI\\ARRecordingManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAADwvwAAAAAAAAAAAAAAAA==",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\max47\\Desktop\\Coding\\CG_AR_Project\\CG_AR\\Assets\\UI\\ARRecordingManager.cs",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-29T05:22:30.796Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-29T05:22:30.796Z"
             }
           ]
         }
