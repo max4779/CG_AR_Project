@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 public class ARScreenRecorder : MonoBehaviour
 {
     // iOS AVAssetWriter 네이티브 함수 연결
-    [DllImport("__Internal")] private static extern void StartRecordingAV();
-    [DllImport("__Internal")] private static extern void StopRecordingAV();
+    [DllImport("__Internal")] private static extern void StartCGRecord();
+    [DllImport("__Internal")] private static extern void StopCGRecord();
 
     // 녹화 상태
     private bool isRecording = false;
@@ -42,7 +42,7 @@ public class ARScreenRecorder : MonoBehaviour
             HideUI();
 
             // iOS 네이티브 녹화 시작 (AR 화면만 녹화)
-            StartRecordingAV();
+            StartCGRecord();
 
             StartTimer();
             isRecording = true;
@@ -50,7 +50,7 @@ public class ARScreenRecorder : MonoBehaviour
         else
         {
             // 네이티브 녹화 종료
-            StopRecordingAV();
+            StopCGRecord();
 
             // Unity UI 다시 표시
             ShowUI();
