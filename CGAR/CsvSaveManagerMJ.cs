@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-// SaveTarget: 하나의 오브젝트와 마커 정보를 담는다
+// 하나의 오브젝트와 마커 정보를 담는다
 [System.Serializable]
 public class SaveTarget
 {
@@ -11,7 +11,7 @@ public class SaveTarget
     public Transform target;     // 실제로 움직이는 오브젝트 트랜스폼
 }
 
-// CsvSaveManagerMJ: 오브젝트 위치/회전/스케일을 csv 파일로 저장한다
+// 오브젝트 위치/회전/스케일을 csv 파일로 저장한다
 public class CsvSaveManagerMJ : MonoBehaviour
 {
     public List<SaveTarget> targets = new List<SaveTarget>();  // 저장할 대상 리스트
