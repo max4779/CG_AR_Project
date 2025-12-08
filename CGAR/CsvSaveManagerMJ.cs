@@ -6,8 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class SaveTarget
 {
-    public string anchorId;      // 마커 이름 (예: marker01)
-    public string objectName;    // 오브젝트 이름 (예: Train)
+    public string anchorId;      // 마커 이름 
+    public string objectName;    // 오브젝트 이름 
     public Transform target;     // 실제로 움직이는 오브젝트 트랜스폼
 }
 
@@ -18,7 +18,7 @@ public class CsvSaveManagerMJ : MonoBehaviour
 
     string csvPath;   // csv 파일 경로
 
-    // Start: 처음 시작할 때 csv 파일 경로를 설정하고 헤더가 없으면 헤더를 만든다
+    //처음 시작할 때 csv 파일 경로를 설정하고 헤더가 없으면 헤더를 만든다
     void Start()
     {
         csvPath = Path.Combine(Application.dataPath, "Data/data.csv");
@@ -39,7 +39,7 @@ public class CsvSaveManagerMJ : MonoBehaviour
         }
     }
 
-    // Update: 매 프레임마다 입력을 확인하고 S 키가 눌리면 저장을 실행한다
+    //  매 프레임마다 입력을 확인하고 S 키가 눌리면 저장을 실행한다
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.S))
@@ -48,7 +48,7 @@ public class CsvSaveManagerMJ : MonoBehaviour
         }
     }
 
-    // SaveAllTargets: targets 리스트의 모든 오브젝트 정보를 csv 파일에 한 줄씩 추가한다
+    //  targets 리스트의 모든 오브젝트 정보를 csv 파일에 한 줄씩 추가한다
     void SaveAllTargets()
     {
         if (targets == null || targets.Count == 0)
