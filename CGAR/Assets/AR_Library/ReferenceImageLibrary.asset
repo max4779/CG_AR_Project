@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
   m_Name: ReferenceImageLibrary
   m_EditorClassIdentifier: 
-  m_GuidLow: 5117458478099765443
-  m_GuidHigh: 12721431431183650194
+  m_GuidLow: 5609338425864918452
+  m_GuidHigh: 15855825075864736899
   m_DataStore:
     m_Storage: []
   m_Images:
   - m_SerializedGuid:
-      m_GuidLow: 5707149569972389476
-      m_GuidHigh: 8532665440298546088
+      m_GuidLow: 4832203130020514860
+      m_GuidHigh: 18057149463015896217
     m_SerializedTextureGuid:
       m_GuidLow: 10980966183832286601
       m_GuidHigh: 1973986223080325849
     m_Size: {x: 1, y: 1}
     m_SpecifySize: 1
-    m_Name: AR_Tracking_Image_Temp
+    m_Name: Marker_Temp
     m_Texture: {fileID: 0}

@@ -1,66 +1,126 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using System.Runtime.InteropServices;
+using UnityEngine.Apple.ReplayKit;
 
 public class ARScreenRecorder : MonoBehaviour
 {
-    // iOS AVAssetWriter 네이티브 함수 연결
-    [DllImport("__Internal")] private static extern void StartCGRecord();
-    [DllImport("__Internal")] private static extern void StopCGRecord();
-
-    // 녹화 상태
-    private bool isRecording = false;
-
-    // UI 그룹
     public GameObject uiGroup;
-
-    // 버튼
     public Button recordButton;
+    public Button stopButton;
     public Button exitButton;
 
+    private bool isRecording = false;
 
     void Start()
     {
-        recordButton.onClick.AddListener(ToggleRecording);
+        if (!ReplayKit.APIAvailable)
+        {
+            Debug.Log("ReplayKit is not available on this device.");
+            return;
+        }
+
+        recordButton.onClick.AddListener(StartRecording);
+        stopButton.onClick.AddListener(StopRecording);
         exitButton.onClick.AddListener(ExitApp);
 
+        stopButton.gameObject.SetActive(false);
     }
 
-    void ToggleRecording()
+    void StartRecording()
+    {
+        if (!ReplayKit.APIAvailable)
+            return;
+
+        ReplayKit.StartRecording(false, false); // 마이크/카메라 X
+
+        uiGroup.SetActive(false);
+        stopButton.gameObject.SetActive(true);
+
+        isRecording = true;
+    }
+
+    void StopRecording()
+    {
+        if (!ReplayKit.APIAvailable)
+            return;
+
+        ReplayKit.StopRecording();
+
+        uiGroup.SetActive(true);
+        stopButton.gameObject.SetActive(false);
+
+        isRecording = false;
+
+        // 이 시점에서 video가 저장됨 (Preview 없이 자동 저장 X)
+        // Preview를 띄우고 싶으면:
+        ReplayKit.Preview();
+    }
+
+    void ExitApp()
     {
 #if UNITY_IOS && !UNITY_EDITOR
-        if (!isRecording)
-        {
-            // Unity UI 숨김 → 화면에 보이지 않음 → 녹화에 포함 X
-            HideUI();
-
-            // iOS 네이티브 녹화 시작 (AR 화면만 녹화)
-            StartCGRecord();
-
-            isRecording = true;
-        }
-        else
-        {
-            // 네이티브 녹화 종료
-            StopCGRecord();
-
-            // Unity UI 다시 표시
-            ShowUI();
-
-            isRecording = false;
-        }
+        Application.Quit();
 #endif
     }
+}
 
-    void HideUI()
+위 코드에서 해당 부분만 수정해봐
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Apple.ReplayKit;
+
+public class ARScreenRecorder : MonoBehaviour
+{
+    public GameObject uiGroup;
+    public Button recordButton;
+    public Button stopButton;
+    public Button exitButton;
+
+    private bool isRecording = false;
+
+    void Start()
     {
-        uiGroup.SetActive(false);
+        if (!ReplayKit.APIAvailable)
+        {
+            Debug.Log("ReplayKit is not available on this device.");
+            return;
+        }
+
+        recordButton.onClick.AddListener(StartRecording);
+        stopButton.onClick.AddListener(StopRecording);
+        exitButton.onClick.AddListener(ExitApp);
+
+        stopButton.gameObject.SetActive(false);
     }
 
-    void ShowUI()
+    void StartRecording()
     {
+        if (!ReplayKit.APIAvailable)
+            return;
+
+        ReplayKit.StartRecording(false, false); // 마이크/카메라 X
+
+        uiGroup.SetActive(false);
+        stopButton.gameObject.SetActive(true);
+
+        isRecording = true;
+    }
+
+    void StopRecording()
+    {
+        if (!ReplayKit.APIAvailable)
+            return;
+
+        ReplayKit.StopRecording();
+
         uiGroup.SetActive(true);
+        stopButton.gameObject.SetActive(false);
+
+        isRecording = false;
+
+        // 이 시점에서 video가 저장됨 (Preview 없이 자동 저장 X)
+        // Preview를 띄우고 싶으면:
+        ReplayKit.Preview();
     }
 
     void ExitApp()
