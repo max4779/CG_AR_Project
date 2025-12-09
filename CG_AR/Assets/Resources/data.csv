@@ -1,3 +1,0 @@
-anchor_id,object_name,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,scale_x,scale_y,scale_z
-marker1,toy,0,0.1,0,0,0,0,0.5,0.5,0.5
-marker1,train,0.2,0,0,45,0,0,0.2,0.2,0.2
