@@ -48,14 +48,19 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.62f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\VRPlacmentSaver.cs" />
     <Compile Include="Assets\UI\AutoUIScaler.cs" />
     <Compile Include="Assets\MobileARTemplateAssets\UI\Scripts\CutoutMaskUI.cs" />
     <Compile Include="Assets\UI\AutoUIPositioner.cs" />
     <Compile Include="Assets\MobileARTemplateAssets\Scripts\ARTemplateMenuManager.cs" />
     <Compile Include="Assets\UI\ARScreenRecorder.cs" />
+    <Compile Include="Assets\Scripts\CsvSaveManagerMJ.cs" />
     <Compile Include="Assets\MobileARTemplateAssets\Scripts\GoalManager.cs" />
+    <Compile Include="Assets\Scripts\AnchorDataLoader.cs" />
+    <Compile Include="Assets\Scripts\AnchorData.cs" />
     <Compile Include="Assets\Settings\Project Configuration\SceneTemplate_RotateCube.cs" />
     <Compile Include="Assets\GhostCharacter_Free\Scripts\GhostScript.cs" />
+    <Compile Include="Assets\Scripts\VR_Control\VRObjectInteractableInitializer.cs" />
     <Compile Include="Assets\MobileARTemplateAssets\Scripts\ARPlaneMeshVisualizerFader.cs" />
   </ItemGroup>
   <ItemGroup>

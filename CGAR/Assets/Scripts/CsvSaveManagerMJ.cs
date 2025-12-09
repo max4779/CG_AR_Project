@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.XR;
 
 // 하나의 오브젝트와 마커 정보를 담는다
 [System.Serializable]
@@ -19,9 +20,11 @@ public class CsvSaveManagerMJ : MonoBehaviour
     string csvPath;   // csv 파일 경로
 
     //처음 시작할 때 csv 파일 경로를 설정하고 헤더가 없으면 헤더를 만든다
+
+    
     void Start()
     {
-        csvPath = Path.Combine(Application.dataPath, "Data/data.csv");
+        csvPath = Path.Combine(Application.persistentDataPath, "data.csv");
 
         // 파일이 없으면 헤더 한 줄만 만든다
         if (!File.Exists(csvPath))
@@ -57,29 +60,23 @@ public class CsvSaveManagerMJ : MonoBehaviour
             return;
         }
 
-        using (StreamWriter sw = new StreamWriter(csvPath, true)) // true: 기존 내용 뒤에 추가
+        // YG_수정파트: 기존에 덮어쓰던 방식을 이어쓰기 모드로 변경 및 모든 기능 덮어쓰기 최적화로 수정
+        using (StreamWriter sw = new StreamWriter(csvPath, false)) // true: 기존 내용 뒤에 추가 ,false: 덮어쓰기
         {
-            foreach (SaveTarget t in targets)
-            {
-                if (t == null || t.target == null)
-                {
-                    Debug.LogWarning("[CsvSaveManagerMJ] target 이 비어 있어서 건너뜁니다");
-                    continue;
-                }
+            sw.WriteLine("anchor_id,object_name,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,scale_x,scale_y,scale_z");
 
-                Vector3 pos = t.target.position;
-                Vector3 rot = t.target.eulerAngles;
+            foreach (var t in targets)
+            {
+                Vector3 pos = t.target.localPosition;
+                Vector3 rot = t.target.localEulerAngles;
                 Vector3 scale = t.target.localScale;
 
-                string line =
-                    $"{t.anchorId},{t.objectName}," +
-                    $"{pos.x},{pos.y},{pos.z}," +
-                    $"{rot.x},{rot.y},{rot.z}," +
-                    $"{scale.x},{scale.y},{scale.z}";
+                string line = $"{t.anchorId},{t.objectName}," +
+                            $"{pos.x},{pos.y},{pos.z}," +
+                            $"{rot.x},{rot.y},{rot.z}," +
+                            $"{scale.x},{scale.y},{scale.z}";
 
                 sw.WriteLine(line);
-
-                Debug.Log($"[CsvSaveManagerMJ] 저장 완료: {line}");
             }
         }
 
