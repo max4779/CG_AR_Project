@@ -9,3 +9,7 @@
 *.csproj
 *.unityproj
 *.sln
+/CG_AR/Library
+/CG_AR/Temp
+/CG_AR/Temp
+CG_AR/Temp/obj/Unity.XR.Interaction.Toolkit.Samples.StarterAssets/.NETStandard,Version=v2.1.AssemblyAttributes.cs
