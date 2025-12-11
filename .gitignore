@@ -1,1 +1,11 @@
-/CG_AR/Library
+# Unity에서 자동 생성되거나 로컬 환경에 종속적인 파일
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/Builds/
+
+# Visual Studio / Rider / VS Code 관련 파일
+.vs/
+*.csproj
+*.unityproj
+*.sln
