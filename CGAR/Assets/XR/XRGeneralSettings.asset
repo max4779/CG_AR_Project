@@ -16,7 +16,6 @@ MonoBehaviour:
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
   m_Loaders:
-  - {fileID: 11400000, guid: bbf1bbcc68185fe41b723ad39ec4d68e, type: 2}
   - {fileID: 11400000, guid: 998731355e123684da489628805f1174, type: 2}
 --- !u!114 &-6011607661423633505
 MonoBehaviour:
@@ -35,6 +34,22 @@ MonoBehaviour:
   m_AutomaticRunning: 0
   m_Loaders:
   - {fileID: 11400000, guid: e83f94cb3ed0e3041b49796e826aabbd, type: 2}
+--- !u!114 &-5627569554853849208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c3631f5e58749a59194e0cf6baf6d5, type: 3}
+  m_Name: tvOS Providers
+  m_EditorClassIdentifier: 
+  m_RequiresSettingsUpdate: 0
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders: []
 --- !u!114 &-5102610910715785812
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49,6 +64,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LoaderManagerInstance: {fileID: 2832879997835686426}
   m_InitManagerOnStart: 1
+--- !u!114 &-3673296985601586727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d236b7d11115f2143951f1e14045df39, type: 3}
+  m_Name: tvOS Settings
+  m_EditorClassIdentifier: 
+  m_LoaderManagerInstance: {fileID: -5627569554853849208}
+  m_InitManagerOnStart: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2dc886499c26824283350fa532d087d, type: 3}
   m_Name: XRGeneralSettings
   m_EditorClassIdentifier: 
-  Keys: 010000000700000004000000240000000e0000000d000000
+  Keys: 010000000700000004000000240000000e0000000d00000019000000
   Values:
   - {fileID: 6796949849618337366}
   - {fileID: 7409956309476867576}
@@ -69,6 +98,7 @@ MonoBehaviour:
   - {fileID: -5102610910715785812}
   - {fileID: 2035732786547295645}
   - {fileID: 2068228267590426084}
+  - {fileID: -3673296985601586727}
 --- !u!114 &2035732786547295645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,4 +235,3 @@ MonoBehaviour:
   m_Loaders:
   - {fileID: 11400000, guid: b92644a1b70d34c08aaf6c1b37c9675d, type: 2}
   - {fileID: 11400000, guid: e8208f59be4c22d4cb645a31a283a59d, type: 2}
-  - {fileID: 11400000, guid: 998731355e123684da489628805f1174, type: 2}
