@@ -43,16 +43,16 @@ public class CsvSaveManagerMJ : MonoBehaviour
     }
 
     //  매 프레임마다 입력을 확인하고 S 키가 눌리면 저장을 실행한다
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            SaveAllTargets();
-        }
-    }
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.S))
+    //     {
+    //         SaveFromButton();
+    //     }
+    // }
 
     //  targets 리스트의 모든 오브젝트 정보를 csv 파일에 한 줄씩 추가한다
-    void SaveAllTargets()
+    void SaveFromButton()
     {
         if (targets == null || targets.Count == 0)
         {
@@ -82,4 +82,6 @@ public class CsvSaveManagerMJ : MonoBehaviour
 
         Debug.Log("[CsvSaveManagerMJ] 모든 대상 저장 완료");
     }
+
+
 }
