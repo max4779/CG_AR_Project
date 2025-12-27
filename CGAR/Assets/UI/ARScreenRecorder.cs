@@ -1,5 +1,5 @@
-#if UNITY_IOS
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Apple.ReplayKit;
@@ -12,8 +12,6 @@ public class ARScreenRecorder : MonoBehaviour
     public Button exitButton;
 
     private bool isRecording = false;
-    private bool isStopping = false;
-    private Coroutine stopRoutine = null;
 
     void Start()
     {
@@ -32,12 +30,10 @@ public class ARScreenRecorder : MonoBehaviour
 
     void StartRecording()
     {
-        if (!ReplayKit.APIAvailable) return;
-        if (isRecording) return;
-        if (isStopping) return;
-        if (ReplayKit.isRecording) return;
+        if (!ReplayKit.APIAvailable)
+            return;
 
-        ReplayKit.StartRecording(false, false);
+        ReplayKit.StartRecording(false, false); // 마이크/카메라 X
 
         uiGroup.SetActive(false);
         stopButton.gameObject.SetActive(true);
@@ -47,49 +43,19 @@ public class ARScreenRecorder : MonoBehaviour
 
     void StopRecording()
     {
-        if (!ReplayKit.APIAvailable) return;
-        if (!isRecording) return;
-        if (isStopping) return;
-
-        isStopping = true;
+        if (!ReplayKit.APIAvailable)
+            return;
 
         ReplayKit.StopRecording();
-
-        if (stopRoutine != null)
-            StopCoroutine(stopRoutine);
-
-        stopRoutine = StartCoroutine(WaitForRecordingThenPreview());
-    }
-
-    private IEnumerator WaitForRecordingThenPreview()
-    {
-        float timeout = 10f;
-        float t = 0f;
-
-        while (!ReplayKit.recordingAvailable && t < timeout)
-        {
-            t += Time.unscaledDeltaTime;
-            yield return null;
-        }
 
         uiGroup.SetActive(true);
         stopButton.gameObject.SetActive(false);
 
         isRecording = false;
-        isStopping = false;
-        stopRoutine = null;
 
-        if (!ReplayKit.recordingAvailable)
-        {
-            Debug.LogError("ReplayKit recording is not available for preview (timeout).");
-            yield break;
-        }
-
-        bool opened = ReplayKit.Preview();
-        if (!opened)
-        {
-            Debug.LogError("ReplayKit.Preview() returned false.");
-        }
+        // 이 시점에서 video가 저장됨 (Preview 없이 자동 저장 X)
+        // Preview를 띄우고 싶으면:
+        ReplayKit.Preview();
     }
 
     void ExitApp()
@@ -99,4 +65,3 @@ public class ARScreenRecorder : MonoBehaviour
 #endif
     }
 }
-#endif
