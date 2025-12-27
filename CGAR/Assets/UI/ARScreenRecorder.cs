@@ -11,17 +11,22 @@ public class ARScreenRecorder : MonoBehaviour
     public Button stopButton;
     public Button exitButton;
 
+    private bool ready = false;
     private bool isRecording = false;
-    private bool isStopping = false;
-    private Coroutine stopRoutine = null;
 
-    void Start()
+    IEnumerator Start()
     {
+        // 최소 2프레임 대기 (공식 OnGUI 효과)
+        yield return null;
+        yield return null;
+
         if (!ReplayKit.APIAvailable)
         {
-            Debug.Log("ReplayKit is not available on this device.");
-            return;
+            Debug.Log("ReplayKit not available");
+            yield break;
         }
+
+        ready = true;
 
         recordButton.onClick.AddListener(StartRecording);
         stopButton.onClick.AddListener(StopRecording);
@@ -32,69 +37,40 @@ public class ARScreenRecorder : MonoBehaviour
 
     void StartRecording()
     {
-        if (!ReplayKit.APIAvailable) return;
+        if (!ready) return;
         if (isRecording) return;
-        if (isStopping) return;
-        if (ReplayKit.isRecording) return;
 
         ReplayKit.StartRecording(false, false);
 
         uiGroup.SetActive(false);
         stopButton.gameObject.SetActive(true);
-
         isRecording = true;
     }
 
     void StopRecording()
     {
-        if (!ReplayKit.APIAvailable) return;
+        if (!ready) return;
         if (!isRecording) return;
-        if (isStopping) return;
-
-        isStopping = true;
 
         ReplayKit.StopRecording();
-
-        if (stopRoutine != null)
-            StopCoroutine(stopRoutine);
-
-        stopRoutine = StartCoroutine(WaitForRecordingThenPreview());
+        StartCoroutine(WaitAndPreview());
     }
 
-    private IEnumerator WaitForRecordingThenPreview()
+    IEnumerator WaitAndPreview()
     {
-        float timeout = 10f;
-        float t = 0f;
-
-        while (!ReplayKit.recordingAvailable && t < timeout)
-        {
-            t += Time.unscaledDeltaTime;
+        while (!ReplayKit.recordingAvailable)
             yield return null;
-        }
 
         uiGroup.SetActive(true);
         stopButton.gameObject.SetActive(false);
-
         isRecording = false;
-        isStopping = false;
-        stopRoutine = null;
 
-        if (!ReplayKit.recordingAvailable)
-        {
-            Debug.LogError("ReplayKit recording is not available for preview (timeout).");
-            yield break;
-        }
-
-        bool opened = ReplayKit.Preview();
-        if (!opened)
-        {
-            Debug.LogError("ReplayKit.Preview() returned false.");
-        }
+        ReplayKit.Preview();
     }
 
     void ExitApp()
     {
-#if UNITY_IOS && !UNITY_EDITOR
+#if !UNITY_EDITOR
         Application.Quit();
 #endif
     }

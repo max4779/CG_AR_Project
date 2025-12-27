@@ -10,7 +10,7 @@ public class AnchorDataLoader : MonoBehaviour
     public string csvFileName = "data";
     public ARTrackedImageManager imageManager; // Inspector에서 할당
 
-    private VRPlacementSaver saveManager;
+    private CsvSaveManagerMJ saveManager;
     // 파싱된 데이터를 저장할 리스트
     private List<AnchorData> anchorDataList = new List<AnchorData>();
     
@@ -28,7 +28,7 @@ public class AnchorDataLoader : MonoBehaviour
             Debug.Log($"CSV 데이터 로드 완료: {anchorDataList.Count}개의 데이터");
         }
 
-        saveManager = FindObjectOfType<VRPlacementSaver>();
+        saveManager = FindObjectOfType<CsvSaveManagerMJ>();
     }
 
     // OnEnable: AR 이미지 추적 이벤트를 구독한다
@@ -108,14 +108,12 @@ public class AnchorDataLoader : MonoBehaviour
         // 마커(trackedImage)의 자식으로 생성하여 마커가 움직이면 같이 움직이게 함
         GameObject instance = Instantiate(prefab, trackedImage.transform);
         
-        instance.AddComponent<VRObjectInteractableInitializer>();
         // CSV 데이터 적용 (로컬 좌표 기준)
         instance.transform.localPosition = data.position;
         instance.transform.localEulerAngles = data.rotation;
         instance.transform.localScale = data.scale;
         instance.name = data.objectName;
 
-        instance.AddComponent<VRObjectInteractableInitializer>();
         saveManager.RegisterTarget(data.anchorId, data.objectName, instance.transform);
 
 
@@ -129,15 +127,15 @@ public class AnchorDataLoader : MonoBehaviour
         // PC 에디터용 경로. (주의: 안드로이드 빌드 시에는 TextAsset 방식을 권장함)
         // YG_수정파트: 에디터용 경로 쓰는것은 좋지않음. 우리는 빌드를 목적으로 개발을 하기 때문
         //string path = Path.Combine(Application.dataPath, "Data", fileName + ".csv");
-        TextAsset csvData = Resources.Load<TextAsset>("Data/" + fileName);
+        string path = Path.Combine(Application.persistentDataPath, fileName + ".csv");
 
-        if (csvData == null)
+        if (!File.Exists(path))
         {
-            Debug.LogError($"[CSV] Resources/Data/{fileName}.csv 파일을 찾을 수 없습니다.");
+            Debug.LogWarning($"[CSV] 파일 없음: {path}");
             return null;
         }
 
-        return csvData.text;
+        return File.ReadAllText(path);
     }
 
     private List<AnchorData> ParseCsvData(string csvText)
