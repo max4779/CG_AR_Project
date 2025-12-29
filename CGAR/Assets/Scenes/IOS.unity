@@ -456,7 +456,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -706,7 +705,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -748,43 +746,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 779745002}
   m_CullTransparentMesh: 1
---- !u!1 &1073471944 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2839756348027974942, guid: a6e3de1156702db42bad1531acbba95c, type: 3}
-  m_PrefabInstance: {fileID: 8439838804275036658}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1073471946 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2194923281149680982, guid: a6e3de1156702db42bad1531acbba95c, type: 3}
-  m_PrefabInstance: {fileID: 8439838804275036658}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073471944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dea56a9eaadd1c439095de4f9a371cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1073471951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073471944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c4ade1fbfbcb478cb97482b320df9b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ARMultiTrackedImageController
-  arTrackedImageManager: {fileID: 1073471946}
-  prefabs:
-  - {fileID: 8484848172253548761, guid: acbf854f42fb14d39b82d99b4c247936, type: 3}
-  - {fileID: 9127840724405347700, guid: cb73dbf62b2c242458837d80daeaaa69, type: 3}
-  - {fileID: 1753034573179713686, guid: b2aacdb69b6bb4fe6bd5c6afcf5f5121, type: 3}
-  - {fileID: 8353491542420428448, guid: 025b471b657104ba99d42b2541e43a1d, type: 3}
-  - {fileID: 1344371444771534257, guid: 803efb15bc8214e45b1345c7b43ff59b, type: 3}
-  - {fileID: 8888622019411388456, guid: ce78d26c763da4ee5a8e478a6438ed36, type: 3}
-  - {fileID: 919132149155446097, guid: 95c71a5a004c3eb4ca59e192bcf022d7, type: 3}
 --- !u!1 &1075000274
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,14 +772,14 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075000274}
   m_Enabled: 1
-  serializedVersion: 12
+  serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
-  m_CookieSize2D: {x: 10, y: 10}
+  m_CookieSize: 10
   m_Shadows:
     m_Type: 2
     m_Resolution: -1
@@ -895,23 +856,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Version: 3
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
-  m_RenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_ShadowRenderingLayersMask:
-    serializedVersion: 0
-    m_Bits: 1
-  m_Version: 4
-  m_LightLayerMask: 1
-  m_ShadowLayerMask: 1
-  m_RenderingLayers: 1
-  m_ShadowRenderingLayers: 1
 --- !u!1 &1323550131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,7 +1188,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1422,18 +1376,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2194923281149680982, guid: a6e3de1156702db42bad1531acbba95c, type: 3}
-      propertyPath: m_SerializedLibrary
-      value: 
-      objectReference: {fileID: 11400000, guid: c17aa0e9a75a448d8a638974f51af4f2, type: 2}
-    - target: {fileID: 2194923281149680982, guid: a6e3de1156702db42bad1531acbba95c, type: 3}
-      propertyPath: m_TrackedImagePrefab
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2194923281149680982, guid: a6e3de1156702db42bad1531acbba95c, type: 3}
-      propertyPath: m_MaxNumberOfMovingImages
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4960455198521694220, guid: a6e3de1156702db42bad1531acbba95c, type: 3}
       propertyPath: m_Name
       value: XR
@@ -1481,10 +1423,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2839756348027974942, guid: a6e3de1156702db42bad1531acbba95c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1073471951}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6e3de1156702db42bad1531acbba95c, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
