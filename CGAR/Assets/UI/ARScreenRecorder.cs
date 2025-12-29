@@ -1,5 +1,5 @@
-#if UNITY_IOS
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Apple.ReplayKit;
@@ -11,22 +11,15 @@ public class ARScreenRecorder : MonoBehaviour
     public Button stopButton;
     public Button exitButton;
 
-    private bool ready = false;
     private bool isRecording = false;
 
-    IEnumerator Start()
+    void Start()
     {
-        // 최소 2프레임 대기 (공식 OnGUI 효과)
-        yield return null;
-        yield return null;
-
         if (!ReplayKit.APIAvailable)
         {
-            Debug.Log("ReplayKit not available");
-            yield break;
+            Debug.Log("ReplayKit is not available on this device.");
+            return;
         }
-
-        ready = true;
 
         recordButton.onClick.AddListener(StartRecording);
         stopButton.onClick.AddListener(StopRecording);
@@ -37,42 +30,38 @@ public class ARScreenRecorder : MonoBehaviour
 
     void StartRecording()
     {
-        if (!ready) return;
-        if (isRecording) return;
+        if (!ReplayKit.APIAvailable)
+            return;
 
-        ReplayKit.StartRecording(false, false);
+        ReplayKit.StartRecording(false, false); // 마이크/카메라 X
 
         uiGroup.SetActive(false);
         stopButton.gameObject.SetActive(true);
+
         isRecording = true;
     }
 
     void StopRecording()
     {
-        if (!ready) return;
-        if (!isRecording) return;
+        if (!ReplayKit.APIAvailable)
+            return;
 
         ReplayKit.StopRecording();
-        StartCoroutine(WaitAndPreview());
-    }
-
-    IEnumerator WaitAndPreview()
-    {
-        while (!ReplayKit.recordingAvailable)
-            yield return null;
 
         uiGroup.SetActive(true);
         stopButton.gameObject.SetActive(false);
+
         isRecording = false;
 
+        // 이 시점에서 video가 저장됨 (Preview 없이 자동 저장 X)
+        // Preview를 띄우고 싶으면:
         ReplayKit.Preview();
     }
 
     void ExitApp()
     {
-#if !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
         Application.Quit();
 #endif
     }
 }
-#endif
