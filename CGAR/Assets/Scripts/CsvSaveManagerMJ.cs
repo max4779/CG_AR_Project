@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.XR;
-using System.Globalization;
-
 
 // 하나의 오브젝트와 마커 정보를 담는다
 [System.Serializable]
@@ -24,23 +22,33 @@ public class CsvSaveManagerMJ : MonoBehaviour
     //처음 시작할 때 csv 파일 경로를 설정하고 헤더가 없으면 헤더를 만든다
 
     
-    void Awake()
+    void Start()
     {
         csvPath = Path.Combine(Application.persistentDataPath, "data.csv");
 
+        // 파일이 없으면 헤더 한 줄만 만든다
         if (!File.Exists(csvPath))
         {
+            Debug.Log($"[CsvSaveManagerMJ] csv 파일이 없어서 새로 만듭니다: {csvPath}");
+
             string header =
                 "anchor_id,object_name,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,scale_x,scale_y,scale_z\n";
+
             File.WriteAllText(csvPath, header);
         }
+        else
+        {
+            Debug.Log($"[CsvSaveManagerMJ] 기존 csv 파일 사용: {csvPath}");
+        }
     }
-
 
     //  매 프레임마다 입력을 확인하고 S 키가 눌리면 저장을 실행한다
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SaveAllTargets();
+        }
     }
 
     //  targets 리스트의 모든 오브젝트 정보를 csv 파일에 한 줄씩 추가한다
@@ -63,49 +71,15 @@ public class CsvSaveManagerMJ : MonoBehaviour
                 Vector3 rot = t.target.localEulerAngles;
                 Vector3 scale = t.target.localScale;
 
-                string line = string.Format(
-                    CultureInfo.InvariantCulture,
-                    "{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10}",
-                    t.anchorId, t.objectName,
-                    pos.x, pos.y, pos.z,
-                    rot.x, rot.y, rot.z,
-                    scale.x, scale.y, scale.z
-                );
-
+                string line = $"{t.anchorId},{t.objectName}," +
+                            $"{pos.x},{pos.y},{pos.z}," +
+                            $"{rot.x},{rot.y},{rot.z}," +
+                            $"{scale.x},{scale.y},{scale.z}";
 
                 sw.WriteLine(line);
             }
         }
 
         Debug.Log("[CsvSaveManagerMJ] 모든 대상 저장 완료");
-    }
-
-    public void RegisterTarget(string anchorId, string objectName, Transform target)
-    {
-        // 이미 등록된 항목이 있는지 확인
-        SaveTarget existing = targets.Find(t =>
-            t.anchorId == anchorId && t.objectName == objectName);
-
-        if (existing != null)
-        {
-            // 이미 있으면 Transform만 갱신
-            existing.target = target;
-            return;
-        }
-
-        // 새로 등록
-        targets.Add(new SaveTarget
-        {
-            anchorId = anchorId,
-            objectName = objectName,
-            target = target
-        });
-
-        Debug.Log($"[CsvSaveManagerMJ] RegisterTarget: {anchorId}, {objectName}");
-    }
-
-    public void SaveByButton()
-    {
-        SaveAllTargets();
     }
 }
