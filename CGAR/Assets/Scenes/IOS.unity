@@ -552,8 +552,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 567182328}
-  - component: {fileID: 567182327}
   - component: {fileID: 567182331}
+  - component: {fileID: 567182332}
   m_Layer: 0
   m_Name: RecordingManager
   m_TagString: Untagged
@@ -561,22 +561,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &567182327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567182326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c57de08d9d2c46169ed69449a8da9db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiGroup: {fileID: 486219956}
-  recordButton: {fileID: 2081530397}
-  stopButton: {fileID: 159402123}
-  exitButton: {fileID: 1709960503}
 --- !u!4 &567182328
 Transform:
   m_ObjectHideFlags: 0
@@ -610,6 +594,22 @@ MonoBehaviour:
   buttonSize: 160
   padding: 60
   midOffset: 0
+--- !u!114 &567182332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567182326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c57de08d9d2c46169ed69449a8da9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiGroup: {fileID: 486219956}
+  recordButton: {fileID: 2081530397}
+  stopButton: {fileID: 159402123}
+  exitButton: {fileID: 1709960503}
 --- !u!1 &779745002
 GameObject:
   m_ObjectHideFlags: 0
