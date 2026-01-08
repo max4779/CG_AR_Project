@@ -55,43 +55,48 @@ public class ARMultiTrackedImageController : MonoBehaviour
 
     void Handle(ARTrackedImage img)
     {
-        if (img.trackingState != TrackingState.Tracking)
-            return;
-
         string marker = img.referenceImage.name;
 
+        // 아직 CSV 안 로드됐거나, 해당 마커 데이터 없음
         if (!anchorDataDict.ContainsKey(marker))
             return;
 
-        AnchorData data = anchorDataDict[marker];
-
-        if (!prefabMap.ContainsKey(data.objectName))
-        {
-            Debug.LogError("[AR] Prefab not found: " + data.objectName);
-            return;
-        }
-
+        // 아직 생성 안 된 상태면 생성만 해둠
         if (!spawned.ContainsKey(marker))
         {
-            GameObject obj = Instantiate(prefabMap[data.objectName]);
-            obj.name = marker + "_Instance";
-            obj.SetActive(false);
-            spawned[marker] = obj;
+            AnchorData data = anchorDataDict[marker];
 
-            Debug.Log("[AR] Spawned " + data.objectName + " for " + marker);
+            if (!prefabMap.ContainsKey(data.objectName))
+            {
+                Debug.LogError("[AR] Prefab not found: " + data.objectName);
+                return;
+            }
+
+            GameObject obj = Instantiate(
+                prefabMap[data.objectName],
+                img.transform   // 마커를 부모로
+            );
+
+            obj.name = marker + "_Instance";
+            obj.transform.localPosition = data.position;
+            obj.transform.localEulerAngles = data.rotation;
+            obj.transform.localScale = data.scale;
+
+            obj.SetActive(false);   // ⭐ 처음엔 비활성화
+            spawned[marker] = obj;
         }
 
-        GameObject active = spawned[marker];
-
-        active.transform.SetPositionAndRotation(
-            img.transform.position,
-            img.transform.rotation
-        );
-
-        active.transform.Translate(data.position, Space.Self);
-        active.transform.Rotate(data.rotation, Space.Self);
-        active.transform.localScale = data.scale;
-
-        active.SetActive(true);
+        // 🔴 핵심 분기
+        if (img.trackingState == TrackingState.Tracking)
+        {
+            spawned[marker].SetActive(true);
+        }
+        else
+        {
+            // ⭐ 마커가 안 보이면 반드시 끈다
+            spawned[marker].SetActive(false);
+        }
     }
+
+
 }

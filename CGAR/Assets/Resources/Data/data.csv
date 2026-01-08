@@ -1,8 +1,8 @@
 anchor_id,object_name,pos_x,pos_y,pos_z,rot_x,rot_y,rot_z,scale_x,scale_y,scale_z
-Marker1,2D_character,-9.5,0.5,-10.5,270.0198,0,0,40,40,40
+Marker1,2D_character,-9.5,0.5,-10.5,270.0198,0,0,35,35,35
 Marker2,car,0,0,0,0,0,0,1,1,1
 Marker3,earth_hologram,0,0,0,0,0,0,1,1,1
 Marker4,goldfish_hologram,0,0,0,0,0,0,1,1,1
-Marker5,headset,0,0,0,0,0,0,1,1,1
+Marker5,headset,0.4835169,-0.4466113,0.5579847,0,0,0,0.7,0.7,0.7
 Marker6,lotus,0,0,0,0,0,0,1,1,1
 Marker7,radio,0,0,0,0,0,0,1,1,1
