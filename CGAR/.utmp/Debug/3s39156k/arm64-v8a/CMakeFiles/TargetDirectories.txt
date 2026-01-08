@@ -1,0 +1,5 @@
+C:/Users/max47/Desktop/Coding/CG_AR_Project/CGAR/.utmp/Debug/3s39156k/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/max47/Desktop/Coding/CG_AR_Project/CGAR/.utmp/Debug/3s39156k/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/max47/Desktop/Coding/CG_AR_Project/CGAR/.utmp/Debug/3s39156k/arm64-v8a/GameActivity/CMakeFiles/game.dir
+C:/Users/max47/Desktop/Coding/CG_AR_Project/CGAR/.utmp/Debug/3s39156k/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+C:/Users/max47/Desktop/Coding/CG_AR_Project/CGAR/.utmp/Debug/3s39156k/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
