@@ -1,83 +1,127 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class CSVLoader : MonoBehaviour
 {
+    [Tooltip("StreamingAssets 폴더 안의 CSV 파일명")]
+    public string csvFileName = "data.csv";
+
     public IEnumerator LoadAnchorDataFromStreamingAssets(
-        System.Action<Dictionary<string, AnchorData>> onLoaded)
+        Action<Dictionary<string, AnchorData>> onLoaded)
     {
         Dictionary<string, AnchorData> dict = new Dictionary<string, AnchorData>();
 
-        string path = System.IO.Path.Combine(
-            Application.streamingAssetsPath,
-            "data.csv"
+        string path = Path.Combine(Application.streamingAssetsPath, csvFileName);
+
+        string url = path;
+        if (!url.StartsWith("http://") &&
+            !url.StartsWith("https://") &&
+            !url.StartsWith("file://"))
+        {
+            url = "file://" + url;
+        }
+
+        using (UnityWebRequest req = UnityWebRequest.Get(url))
+        {
+            yield return req.SendWebRequest();
+
+#if UNITY_2020_2_OR_NEWER
+            if (req.result != UnityWebRequest.Result.Success)
+#else
+            if (req.isNetworkError || req.isHttpError)
+#endif
+            {
+                Debug.LogError("[CSVLoader] Failed to load CSV: " + req.error);
+                onLoaded?.Invoke(dict);
+                yield break;
+            }
+
+            string csvText = req.downloadHandler.text;
+            if (string.IsNullOrEmpty(csvText))
+            {
+                Debug.LogError("[CSVLoader] CSV is empty");
+                onLoaded?.Invoke(dict);
+                yield break;
+            }
+
+            ParseCSV(csvText, dict);
+        }
+
+        Debug.Log("[CSVLoader] Loaded rows = " + dict.Count);
+        onLoaded?.Invoke(dict);
+    }
+
+    private void ParseCSV(string csvText, Dictionary<string, AnchorData> dict)
+    {
+        string[] lines = csvText.Split(
+            new[] { '\r', '\n' },
+            StringSplitOptions.RemoveEmptyEntries
         );
 
-        Debug.Log("[CSV] try load: " + path);
-
-        UnityWebRequest req = UnityWebRequest.Get(path);
-        yield return req.SendWebRequest();
-
-        if (req.result != UnityWebRequest.Result.Success)
-        {
-            Debug.LogError("[CSV] Load failed: " + req.error);
-            onLoaded?.Invoke(dict);
-            yield break;
-        }
-
-        string text = req.downloadHandler.text;
-        string[] lines = text.Split('\n');
-
-        Debug.Log("[CSV] line count = " + lines.Length);
-
-        if (lines.Length < 2)
-        {
-            onLoaded?.Invoke(dict);
-            yield break;
-        }
-
-        // 탭 / 쉼표 자동 판별
-        char delimiter = lines[1].Contains("\t") ? '\t' : ',';
+        if (lines.Length <= 1)
+            return;
 
         for (int i = 1; i < lines.Length; i++)
         {
-            if (string.IsNullOrWhiteSpace(lines[i])) continue;
-
-            string[] t = lines[i].Trim().Split(delimiter);
-            if (t.Length < 11)
-            {
-                Debug.LogError("[CSV] Invalid line: " + lines[i]);
+            string[] cols = lines[i].Split(',');
+            if (cols.Length < 11)
                 continue;
-            }
+
+            string anchorId = cols[0].Trim();   // Marker 이름
+            string objectName = cols[1].Trim();
 
             AnchorData data = new AnchorData
             {
-                anchorId = t[0].Trim(),
-                objectName = t[1].Trim(),
+                objectName = objectName,
                 position = new Vector3(
-                    float.Parse(t[2], CultureInfo.InvariantCulture),
-                    float.Parse(t[3], CultureInfo.InvariantCulture),
-                    float.Parse(t[4], CultureInfo.InvariantCulture)
+                    ParseFloat(cols[2]),
+                    ParseFloat(cols[3]),
+                    ParseFloat(cols[4])
                 ),
                 rotation = new Vector3(
-                    float.Parse(t[5], CultureInfo.InvariantCulture),
-                    float.Parse(t[6], CultureInfo.InvariantCulture),
-                    float.Parse(t[7], CultureInfo.InvariantCulture)
+                    ParseFloat(cols[5]),
+                    ParseFloat(cols[6]),
+                    ParseFloat(cols[7])
                 ),
                 scale = new Vector3(
-                    float.Parse(t[8], CultureInfo.InvariantCulture),
-                    float.Parse(t[9], CultureInfo.InvariantCulture),
-                    float.Parse(t[10], CultureInfo.InvariantCulture)
+                    ParseFloat(cols[8]),
+                    ParseFloat(cols[9]),
+                    ParseFloat(cols[10])
                 )
             };
 
-            dict[data.anchorId] = data;
+            dict[anchorId] = data;
+        }
+    }
+
+
+
+    private float ParseFloat(string value)
+    {
+        if (float.TryParse(
+                value.Trim(),
+                NumberStyles.Float,
+                CultureInfo.InvariantCulture,
+                out float result))
+        {
+            return result;
         }
 
-        Debug.Log("[CSV] Loaded anchor count = " + dict.Count);
-        onLoaded?.Invoke(dict);
+        value = value.Replace(',', '.');
+        if (float.TryParse(
+                value,
+                NumberStyles.Float,
+                CultureInfo.InvariantCulture,
+                out result))
+        {
+            return result;
+        }
+
+        return 0f;
     }
 }
