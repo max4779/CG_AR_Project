@@ -28,21 +28,11 @@ MonoBehaviour:
     m_Name: Marker1
     m_Texture: {fileID: 0}
   - m_SerializedGuid:
-      m_GuidLow: 5411692790857443877
-      m_GuidHigh: 11959807925783676058
-    m_SerializedTextureGuid:
-      m_GuidLow: 6747743504730356479
-      m_GuidHigh: 1785318284925605401
-    m_Size: {x: 1, y: 1}
-    m_SpecifySize: 1
-    m_Name: Marker2
-    m_Texture: {fileID: 0}
-  - m_SerializedGuid:
       m_GuidLow: 4922726829431788858
       m_GuidHigh: 6353686505550827402
     m_SerializedTextureGuid:
-      m_GuidLow: 17957103221901137740
-      m_GuidHigh: 4937906094428678009
+      m_GuidLow: 2658446840457929552
+      m_GuidHigh: 1892792232934608793
     m_Size: {x: 1, y: 1}
     m_SpecifySize: 1
     m_Name: Marker3
@@ -86,4 +76,14 @@ MonoBehaviour:
     m_Size: {x: 1, y: 1}
     m_SpecifySize: 1
     m_Name: Marker7
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5053485989863741801
+      m_GuidHigh: 18160280073653323168
+    m_SerializedTextureGuid:
+      m_GuidLow: 1494922672829828301
+      m_GuidHigh: 5228740796924009016
+    m_Size: {x: 1, y: 1}
+    m_SpecifySize: 1
+    m_Name: Marker2
     m_Texture: {fileID: 0}
